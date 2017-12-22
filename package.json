@@ -1,0 +1,7 @@
+{
+  "name": "fe.money-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "周新凯 <zhouxinkai@meituan.com>",
+  "license": "MIT"
+}
