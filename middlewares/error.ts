@@ -1,9 +1,6 @@
 import { Context } from 'koa';
 import ServerError from '../lib/error';
-import raven = require('raven');
 import config = require('config');
-
-const client = new raven.Client(config.get('sentry.server.DSN'));
 
 function renderErrorHtml(e: ServerError) {
   const isDev = config.get('isDev');
@@ -28,28 +25,19 @@ export default async (ctx: Context, next: Function) => {
     await next();
   } catch (e) {
     const err: ServerError = e;
-    if (!err.ignore && !config.get('isDev')) {
-      client.captureException(e, {
-        extra: Object.assign({}, e.data, {
-          user: ctx.cookies.get('openid'),
-          tenantId: ctx.cookies.get('tenantId'),
-          poiId: ctx.cookies.get('poiId'),
-        }),
-      });
-    }
 
     if (ctx.accepts('html')) {
       ctx.body = renderErrorHtml(err);
     } else if (ctx.accepts('json')) {
       const body: {
-        message: string,
-        code: number,
-        stack?: string,
-        show?: boolean
+        message: string;
+        code: number;
+        stack?: string;
+        show?: boolean;
       } = {
         message: err.message,
         code: err.code,
-        show: err.show
+        show: err.show,
       };
 
       if (config.get('isDev')) {
@@ -71,4 +59,4 @@ export default async (ctx: Context, next: Function) => {
       console.error('ERROR', JSON.stringify(e));
     }
   }
-}
+};

@@ -9,7 +9,7 @@ export const wxApi = axios.create({
   },
   validateStatus() {
     return true;
-  }
+  },
 });
 export const alipayApi = axios.create({
   baseURL: 'https://openapi.alipay.com',
@@ -21,5 +21,5 @@ export const alipayApi = axios.create({
   },
   validateStatus() {
     return true;
-  }
+  },
 });

@@ -15,10 +15,9 @@
       "es2017"
     ],
     "typeRoots": [
-      "../declarations/",
-      "../../node_modules/@types/"
+      "./node_modules/@types/"
     ],
-    "outDir": "../../dist",
+    "outDir": "./dist",
     "experimentalDecorators": true
   },
   "include": [

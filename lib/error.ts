@@ -1,42 +1,35 @@
-import {
-  isBoolean,
-  isNumber,
-  isString,
-} from './types';
+import { isBoolean, isNumber, isString } from './types';
 
-import {
-  SERVER_HANDLE_SUCCESS_CODE
-} from '../../declarations/constants';
+import { SERVER_HANDLE_SUCCESS_CODE } from '../types';
 
 type ErrorOptions = {
   /**
    * 是否忽略此错误
    */
-  ignore?: boolean,
+  ignore?: boolean;
   /**
    * 是否展示给客户端
    */
-  show?: boolean,
+  show?: boolean;
   /**
    * 后端返回的错误码
    */
-  code?: number,
+  code?: number;
   /**
    * HTTP 状态码
    */
-  status?: number,
+  status?: number;
   /**
    * 附加数据
    */
   // tslint:disable-next-line:no-any
-  data?: any,
-}
+  data?: any;
+};
 
 type ThriftStatus = {
   code: number;
   msg: string;
-}
-
+};
 
 export default class ServerError extends Error {
   ignore: boolean;
@@ -48,15 +41,19 @@ export default class ServerError extends Error {
 
   constructor(options: ErrorOptions & { message: string });
   constructor(message: string);
-  constructor(options: {
-    message: string
-  } & ErrorOptions | string) {
+  constructor(
+    options:
+      | {
+          message: string;
+        } & ErrorOptions
+      | string,
+  ) {
     isString(options) ? super(options) : super(options.message);
 
-     this.ignore = false;
-     this.show = true;
-     this.code = 500;
-     this.status = 500;
+    this.ignore = false;
+    this.show = true;
+    this.code = 500;
+    this.status = 500;
     if (!isString(options)) {
       this.setOptions(options);
     }
@@ -88,10 +85,14 @@ export default class ServerError extends Error {
 /**
  * 判断 thrift 返回结果是否正常
  */
-export const assertThriftSuccess = (response: {
-  status: ThriftStatus
- // tslint:disable-next-line:no-any
- }, method: string, args: any[]) => {
+export const assertThriftSuccess = (
+  response: {
+    status: ThriftStatus;
+    // tslint:disable-next-line:no-any
+  },
+  method: string,
+  args: any[],
+) => {
   const status = response.status || response; // 兼容 response 是一个 Status 结构的情况
   if (status.code === SERVER_HANDLE_SUCCESS_CODE) {
     return;
@@ -102,7 +103,7 @@ export const assertThriftSuccess = (response: {
       data: {
         method,
         args,
-      }
+      },
     });
   }
-}
+};

@@ -4,12 +4,16 @@
  * 注：不能使用 instanceOf Date 直接判断，在 nw 下会造成误判
  */
 export function isDate(date: any): date is Date {
-  if (!date) return false;
+  if (!date) {
+    return false;
+  }
   return Object.prototype.toString.call(date) === '[object Date]';
 }
 
 export function isDateNoGuards(date: any): boolean {
-  if (!date) return false;
+  if (!date) {
+    return false;
+  }
   return Object.prototype.toString.call(date) === '[object Date]';
 }
 

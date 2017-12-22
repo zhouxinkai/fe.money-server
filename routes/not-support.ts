@@ -1,17 +1,9 @@
-import { Context } from 'koa';
 import { route } from './decorator';
 
 export class NotSupport {
-  @route('get', '/notSupport')
-  async notSupoort(ctx: Context, next: Function) {
-    ctx.body = makeTpl('请您使用微信或支付宝扫一扫功能进行点餐');
-    await next();
-  }
-
   @route('get', '/noTable')
-  async noTable(ctx: Context, next: Function) {
-    ctx.body = makeTpl('此二维码暂不支持自助点餐，请联系服务员点餐');
-    await next();
+  async noTable() {
+    return makeTpl('此二维码暂不支持自助点餐，请联系服务员点餐');
   }
 }
 
@@ -41,5 +33,5 @@ function makeTpl(content: string) {
       <body>
         <div class="content">${content}</div>
       </body>
-    </html>`
+    </html>`;
 }
