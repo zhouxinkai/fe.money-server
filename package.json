@@ -21,6 +21,7 @@
     "@types/winston": "^2.3.7",
     "axios": "^0.17.1",
     "config": "^1.28.1",
+    "ip-address": "^5.8.9",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-compress": "^2.0.0",

@@ -5,5 +5,9 @@ module.exports = {
   isDev: false,
   isProd: false,
   isMock: false,
-  root: path.resolve(__dirname, '..')
+  root: path.resolve(__dirname, '..'),
+  xf: {
+    appId: '5a3c7645',
+    appKey: '844e8ec8318843919bb7703b1e169dce'
+  }
 };

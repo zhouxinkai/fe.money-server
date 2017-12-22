@@ -6,7 +6,7 @@ import bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
 
-app.use(compress())
+app.use(compress());
 app.use(bodyParser());
 app.use(middlewares);
 app.use(routes);
