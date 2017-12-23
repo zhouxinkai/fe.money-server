@@ -3,7 +3,6 @@ import { route } from './decorator';
 import { xfApi } from '../utils/api';
 const crypto = require('crypto');
 const config = require('config');
-const querystring = require('querystring');
 const formidable = require('formidable');
 const fs = require('fs');
 
@@ -14,7 +13,6 @@ const hash = crypto.createHash('md5');
 const getBase64 = (content?: string) =>
   new Buffer(content || '').toString('base64');
 
-//upload.js
 const exec = require('child_process').exec;
 const silkToWav = (filePath: string) => {
   return new Promise<string>((resolve, reject) => {
@@ -27,16 +25,12 @@ const silkToWav = (filePath: string) => {
             stderr,
           });
         } else {
-          //var data = JSON.parse(stdout);
           console.log(stdout);
-          // console.log(stderr);
-          // console.log(err);
           fs.readFile(`${filePath}.wav`, function(err: Error, data: Buffer) {
             if (err) {
               reject(err);
             } else {
               const content = new Buffer(data).toString('base64');
-              // console.log(content);
               resolve(content);
             }
           });
@@ -55,7 +49,7 @@ const getRecordFilePath = (ctx: Context) => {
         reject(err);
       }
       const filePath: string = files.record.path;
-      console.log(filePath, files.record.type);
+      // console.log(filePath, files.record.type);
       resolve(filePath);
       // const content = fs.readFileSync(filePath, 'base64');
     });
@@ -74,12 +68,12 @@ export class Test {
       JSON.stringify({ scene: 'main', userid: 'user_0001' }),
     );
     text = getBase64(text);
-    body = querystring.stringify({ text });
+    const formData = `text=${text}`;
     const curTime = getCurTime();
     const hash = crypto.createHash('md5');
-    hash.update(`${appKey}${curTime}${param}${body}`);
+    hash.update(`${appKey}${curTime}${param}${formData}`);
     const CheckSum = hash.digest('hex');
-    const ret = await xfApi.post(ctx.request.path, body, {
+    const ret = await xfApi.post(ctx.request.path, formData, {
       headers: {
         'X-Appid': appId,
         'X-CurTime': curTime,
@@ -87,7 +81,6 @@ export class Test {
         'X-Param': param,
       },
     });
-    console.log(param);
     return ret.data;
   }
 
@@ -95,19 +88,14 @@ export class Test {
   async getIat(ctx: Context) {
     const filePath = await getRecordFilePath(ctx);
     let data = await silkToWav(filePath);
-    console.log(data);
     let param = getBase64(
       JSON.stringify({ auf: '16k', aue: 'raw', scene: 'main' }),
     );
-    // param = 'eyJhdWUiOiJyYXciLCJzY2VuZSI6Im1haW4iLCJhdWYiOiIxNksifQ==';
-    const body = querystring.stringify({ data });
+    const body = `data=${data}`;
     let curTime = getCurTime();
-    // curTime = 1514024045;
-    // const hash = crypto.createHash('md5');
-    hash.update(`${appKey}${curTime}${param}data=${data}`);
+    hash.update(`${appKey}${curTime}${param}${body}`);
     let checkSum = hash.digest('hex');
-    // checkSum = '5d75cc02ae40102c6dcdb294f69971f1';
-    const ret = await xfApi.post(ctx.request.path, `data=${data}`, {
+    const ret = await xfApi.post(ctx.request.path, body, {
       headers: {
         'X-Appid': appId,
         'X-CurTime': curTime,
@@ -115,18 +103,6 @@ export class Test {
         'X-Param': param,
       },
     });
-    console.log(
-      JSON.stringify(
-        {
-          appId,
-          curTime,
-          checkSum,
-          param,
-        },
-        null,
-        2,
-      ),
-    );
     return ret.data;
   }
 
@@ -142,7 +118,7 @@ export class Test {
         userid: 'user_0001',
       }),
     );
-    const body = querystring.stringify({ data });
+    const body = `data=${data}`;
     const curTime = getCurTime();
     hash.update(`${appKey}${curTime}${param}${body}`);
     const checkSum = hash.digest('hex');
