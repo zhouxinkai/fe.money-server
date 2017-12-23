@@ -12,4 +12,3 @@ app.use(middlewares);
 app.use(routes);
 
 export default app;
-

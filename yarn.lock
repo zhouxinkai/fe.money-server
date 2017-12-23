@@ -434,6 +434,10 @@ foreach@^2.0.5:
   version "2.0.5"
   resolved "http://r.npm.sankuai.com/foreach/download/foreach-2.0.5.tgz#0bee005018aeb260d0a3af3ae658dd0136ec1b99"
 
+formidable@^1.1.1:
+  version "1.1.1"
+  resolved "http://r.npm.sankuai.com/formidable/download/formidable-1.1.1.tgz#96b8886f7c3c3508b932d6bd70c4d3a88f35f1a9"
+
 fresh@^0.5.2:
   version "0.5.2"
   resolved "http://r.npm.sankuai.com/fresh/download/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"

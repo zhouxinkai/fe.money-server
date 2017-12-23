@@ -2,7 +2,7 @@
     "extends": ["tslint-plugin-prettier"],
     "rules": {
       "prettier": true,
-      "no-unused-expression": true,
+      "no-unused-expression": false,
       "no-duplicate-variable": true,
       "curly": true,
       "class-name": true,

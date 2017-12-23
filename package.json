@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "compile": "rm -r dist; tsc -w -p .",
-    "dev": "NODE_ENV=development node ./dist/index.js",
+    "dev": "NODE_ENV=development node --inspect=9099 ./dist/index.js",
     "lint": "prettier --write ./**/*.ts && tslint -p ./tsconfig.json -c tslint.json ./**/*.ts"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "@types/winston": "^2.3.7",
     "axios": "^0.17.1",
     "config": "^1.28.1",
+    "formidable": "^1.1.1",
     "ip-address": "^5.8.9",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
